@@ -13,7 +13,7 @@ library(downloadthis)
 library(glue)
 
 dllink <- download_link(
-  link = "http://mattwaite.github.io/sportsdatafiles/attendance.csv",
+  link = "https://dwillis.github.io/sportsdatafiles/attendance.csv",
   button_label = "Download csv file",
   button_type = "danger",
   has_icon = TRUE,
@@ -37,20 +37,20 @@ Now import the data.
 attendance <- read_csv('data/attendance.csv')
 ```
 
-So, first things first, let's say we don't care about all this Air Force, Akron, Alabama crap and just want to see Dear Old Nebraska U. We do that with `filter` and then we pass it a condition. 
+So, first things first, let's say we don't care about all this Air Force, Akron, Alabama crap and just want to see Dear Old Maryland We do that with `filter` and then we pass it a condition. 
 
 Before we do that, a note about conditions. Most of the conditional operators you'll understand -- greater than and less than are > and <. The tough one to remember is equal to. In conditional statements, equal to is == not =. If you haven't noticed, = is a variable assignment operator, not a conditional statement. So equal is == and NOT equal is !=. 
 
-So if you want to see Institutions equal to Nebraska, you do this:
+So if you want to see Institutions equal to Maryland, you do this:
 
 ```{r}
-attendance %>% filter(Institution == "Nebraska")
+attendance %>% filter(Institution == "Maryland")
 ```
 
 Or if we want to see schools that had more than half a million people buy tickets to a football game in a season, we do the following. NOTE THE BACKTICKS. 
 
 ```{r}
-attendance %>% filter(`2018` >= 500000)
+attendance %>% filter(`2019` >= 500000)
 ```
 
 But what if we want to see all of the Power Five conferences? We *could* use conditional logic in our filter. The conditional logic operators are `|` for OR and `&` for AND. NOTE: AND means all conditions have to be met. OR means any of the conditions work. So be careful about boolean logic. 
@@ -93,7 +93,7 @@ library(downloadthis)
 library(glue)
 
 dllink <- download_link(
-  link = "http://mattwaite.github.io/sportsdatafiles/players21.csv",
+  link = "https://dwillis.github.io/sportsdatafiles/players21.csv",
   button_label = "Download csv file",
   button_type = "danger",
   has_icon = TRUE,
@@ -114,7 +114,7 @@ players %>%
   mutate(trueshooting = (PTS/(2*(FGA + (.44*FTA))))*100) %>%
   arrange(desc(trueshooting))
 ```
-And ine the COVID season, Weber State's Jake Furgerson is your One Shot One Three True Shooting champion.
+In the COVID season, Weber State's Jake Furgerson is your One Shot One Three True Shooting champion.
 
 In most contests, like the batting title in Major League Baseball, there's a minimum number of X to qualify. In baseball, it's at bats. In basketball, it attempts. So let's set a floor and see how it changes. What if we said you had to have played 100 minutes in a season? The top players in college basketball play more than 1000 minutes in a season. So 100 is not that much. Let's try it and see.
 
@@ -136,6 +136,6 @@ One last little dplyr trick that's nice to have in the toolbox is a shortcut for
 So what are the top 10 Power Five schools by season attendance. All we're doing here is chaining commands together with what we've already got. We're *filtering* by our list of Power Five conferences, we're *selecting* the three fields we need, now we're going to *arrange* it by total attendance and then we'll introduce the new function: `top_n`. The `top_n` function just takes a number. So we want a top 10 list? We do it like this: 
 
 ```{r}
-attendance %>% filter(Conference %in% powerfive) %>% select(Institution, Conference, `2018`) %>% arrange(desc(`2018`)) %>% top_n(10)
+attendance %>% filter(Conference %in% powerfive) %>% select(Institution, Conference, `2019`) %>% arrange(desc(`2019`)) %>% top_n(10)
 ```
 That's all there is to it. Just remember -- for it to work correctly, you need to sort your data BEFORE you run top_n. Otherwise, you're just getting the first 10 values in the list. The function doesn't know what field you want the top values of. You have to do it. 
