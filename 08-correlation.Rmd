@@ -13,7 +13,7 @@ library(downloadthis)
 library(glue)
 
 dllink <- download_link(
-  link = "http://mattwaite.github.io/sportsdatafiles/footballlogs20.csv",
+  link = "https://dwillis.github.io/sportsdatafiles/footballlogs20.csv",
   button_label = "Download csv file",
   button_type = "danger",
   has_icon = TRUE,
@@ -37,7 +37,7 @@ Now import the data.
 correlations <- read_csv("data/footballlogs20.csv")
 ```
 
-To do this, we need all FBS college football teams and their season stats from last year. How much, over the course of a season, does a thing matter? That's the question you're going to answer. 
+To do this, we need all FBS college football teams and their season stats from that year. How much, over the course of a season, does a thing matter? That's the question you're going to answer. 
 
 In our case, we want to know how much does a team's accumulated penalties influence the number of points they score in a season? How much difference can we explain in points with penalties? 
 
@@ -128,7 +128,7 @@ First we check p-value. See that e-16? That means scientific notation. That mean
 
 Second, Adjusted R-squared: 0.6414. So we can predict a whopping 64 percent of the difference in the score differential by simply looking at the net yards the team has.
 
-Third, the coefficients: In this case, our `y=mx+b` formula looks like `y = 0.101704x + 0.311030`. So if we were applying this, let's look at Nebraska's 26-20 loss to Iowa in 2020. Nebraska's net yards that game? 16. That's right -- we outgained them.  
+Third, the coefficients: In this case, our `y=mx+b` formula looks like `y = 0.101704x + 0.311030`. So if we were applying this, let's look at Nebraska's 26-20 loss to Iowa in 2020. Nebraska's net yards that game? 16. That's right -- positive net yards, but still a loss. What does our model say the point differential should have been?  
 
 ```{r}
 (0.101704*16)+0.311030 
