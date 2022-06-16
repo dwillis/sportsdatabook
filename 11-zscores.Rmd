@@ -21,7 +21,7 @@ library(downloadthis)
 library(glue)
 
 dllink <- download_link(
-  link = "http://mattwaite.github.io/sportsdatafiles/logs20.csv",
+  link = "https://dwillis.github.io/sportsdatafiles/logs20.csv",
   button_label = "Download csv file",
   button_type = "danger",
   has_icon = TRUE,
@@ -96,7 +96,7 @@ teamzscore %>% arrange(desc(TotalZscore))
 
 Don't sleep on the Anteaters! Would have been a tough out at the tournament that never happened.
 
-But closer to home, how is Nebraska doing.
+But closer to home, how is Maryland doing?
 
 ```{r}
 teamzscore %>% 
@@ -105,7 +105,7 @@ teamzscore %>%
   select(Team, TotalZscore)
 ```
 
-So, as we can see, with our composite Z Score, Nebraska is ... not good. Not good at all. 
+So, as we can see, with our composite Z Score, Maryland is ... kinda average. 
 
 ## Writing about z-scores
 

@@ -1,6 +1,6 @@
 # Residuals
 
-When looking at a linear model of your data, there's a measure you need to be aware of called residuals. The residual is the distance between what the model predicted and what the real outcome is. Take our model at the end of the correlation and regression chapter. Our model predicted Nebraska, given a 5 net yardage margin would beat Iowa by 1.96 points. They lost by 6. So our residual is -7.96. 
+When looking at a linear model of your data, there's a measure you need to be aware of called residuals. The residual is the distance between what the model predicted and what the real outcome is. Take our model at the end of the correlation and regression chapter. Our model predicted Maryland, given a -20 net yardage margin would lose to Indiana by 2.2 points. They lost by 16. So our residual is -13.8. 
 
 Residuals can tell you several things, but most important is if a linear model the right model for your data. If the residuals appear to be random, then a linear model is appropriate. If they have a pattern, it means something else is going on in your data and a linear model isn't appropriate. 
 
@@ -13,7 +13,7 @@ library(downloadthis)
 library(glue)
 
 dllink <- download_link(
-  link = "http://mattwaite.github.io/sportsdatafiles/footballlogs20.csv",
+  link = "https://dwillis.github.io/sportsdatafiles/footballlogs20.csv",
   button_label = "Download csv file",
   button_type = "danger",
   has_icon = TRUE,
@@ -65,9 +65,15 @@ Now we can sort our data by those residuals. Sorting in descending order gives u
 ```{r}
 residualmodel %>% arrange(desc(residuals)) %>% select(Team, Opponent, Result, differential, NetYards, predicted, residuals)
 ```
-So looking at this table, what you see here are the teams who scored more than their net yards would indicate. One of them should jump off the page at you.
+So looking at this table, what you see here are the teams who scored more than their net yards would indicate. Several are pretty eye-opening, including Wisconsin-Wake Forest.
 
-Remember Nebraska vs Rutgers? We won and everyone was happy and relieved the season was over? We outgained Rutgers by **368 yards** in that game and won by 7. Our model predicted Nebraska should have won that game by **37** points. We should have blown Rutgers out of their own barn. But Rutgers isn't as hard done as Arizona, which should have lost by 48, but ended up losing by 63.  
+What about Maryland?
+
+```{r}
+residualmodel %>% arrange(desc(residuals)) %>% select(Team, Opponent, Result, differential, NetYards, predicted, residuals) %>% filter(Team == 'Maryland')
+```
+
+The Minnesota game that season was pretty wild - Maryland outgained the Gophers by **224 yards**, which our model predicts should have led to a **23-point** victory. What the model suggests should have been an easy win was anything but. But Minnesota isn't as hard done as Arizona was in the list above: they should have lost by 48, but ended up losing by 63.
 
 But, before we can bestow any validity on this model, we need to see if this linear model is appropriate. We've done that some looking at our p-values and R-squared values. But one more check is to look at the residuals themselves. We do that by plotting the residuals with the predictor. We'll get into plotting soon, but for now just seeing it is enough.
 

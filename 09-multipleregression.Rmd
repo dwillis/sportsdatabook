@@ -107,7 +107,7 @@ What is the Residual standard error?
 
 The final thing we can do with this is predict things. Look at our coefficients table. See the Estimates? We can build a formula from that, same as we did with linear regressions.
 
-How does this apply in the real world? Let's pretend for a minute that you are Scott Frost, and you have a mess on your hands. Your job is to win conference titles. To do that, we need to know what attributes of a team should we emphasize. We can do that by looking at what previous Big Ten conference champions looked like.
+How does this apply in the real world? Let's pretend for a minute that you are Mike Locksley, and you have a mess on your hands. Your job is to win conference titles. To do that, we need to know what attributes of a team we should emphasize. We can do that by looking at what previous Big Ten conference champions looked like.
 
 So if our goal is to predict a conference champion team, we need to know what those teams did. Here's the regular season conference champions in this dataset. 
 
@@ -149,4 +149,4 @@ logs %>%
 (0.0547465*-20.8) + (3.8806793*-1.4) + (-3.9374905*5.42) + (3.9152803*6.44) + 0.4960303
 ```
 
-By this model, it predicted we would average being outscored by our opponents by 2.2 points over the season. Reality? We were outscored by 8.4 on average. 
+By this model, it predicted we would average being outscored by our opponents by 2.2 points over the season. Reality? We were outscored by 8.4 on average.
