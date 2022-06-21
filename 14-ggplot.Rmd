@@ -24,7 +24,7 @@ library(downloadthis)
 library(glue)
 
 dllink <- download_link(
-  link = "http://mattwaite.github.io/sportsdatafiles/attendance.csv",
+  link = "https://dwillis.github.io/sportsdatafiles/attendance.csv",
   button_label = "Download csv file",
   button_type = "danger",
   has_icon = TRUE,
@@ -52,18 +52,18 @@ First, let's get a top 10 list by announced attendance in the most recent season
 
 ```{r}
 attendance %>% 
-  arrange(desc(`2018`)) %>% 
+  arrange(desc(`2019`)) %>% 
   top_n(10) %>% 
-  select(Institution, `2018`)
+  select(Institution, `2019`)
 ```
 
 That looks good, so let's save it to a new data frame and use that data frame instead going forward.
 
 ```{r}
 top10 <- attendance %>%
-  arrange(desc(`2018`)) %>% 
+  arrange(desc(`2019`)) %>% 
   top_n(10) %>% 
-  select(Institution, `2018`)
+  select(Institution, `2019`)
 ```
 
 ## The bar chart
@@ -84,7 +84,7 @@ We get ... weirdness. We expected to see bars of different sizes, but we get all
 
 ```{r}
 ggplot() + 
-  geom_bar(data=top10, aes(x=Institution, weight=`2018`))
+  geom_bar(data=top10, aes(x=Institution, weight=`2019`))
 ```
 
 Closer. But ... what order is that in? And what happened to our count numbers on the left? Why are they in scientific notation?
@@ -92,13 +92,13 @@ Closer. But ... what order is that in? And what happened to our count numbers on
 Let's deal with the ordering first. `ggplot2`'s default behavior is to sort the data by the x axis variable. So it's in alphabetical order. To change that, we have to `reorder` it. With `reorder`, we first have to tell `ggplot` what we are reordering, and then we have to tell it HOW we are reordering it. So it's reorder(FIELD, SORTFIELD). 
 
 ```{r}
-ggplot() + geom_bar(data=top10, aes(x=reorder(Institution, `2018`), weight=`2018`))
+ggplot() + geom_bar(data=top10, aes(x=reorder(Institution, `2019`), weight=`2019`))
 ```
 
 Better. We can argue about if the right order is smallest to largest or largest to smallest. But this gets us close. By the way, to sort it largest to smallest, put a negative sign in front of the sort field. 
 
 ```{r}
-ggplot() + geom_bar(data=top10, aes(x=reorder(Institution, -`2018`), weight=`2018`))
+ggplot() + geom_bar(data=top10, aes(x=reorder(Institution, -`2019`), weight=`2019`))
 ```
 
 ## Scales
@@ -115,7 +115,7 @@ To alter the scale, we add a piece to our plot with `+` and we tell it which sca
 
 ```{r}
 ggplot() + 
-  geom_bar(data=top10, aes(x=reorder(Institution, -`2018`), weight=`2018`)) + 
+  geom_bar(data=top10, aes(x=reorder(Institution, -`2019`), weight=`2019`)) + 
   scale_y_continuous(labels=comma)
 ```
 
@@ -127,7 +127,7 @@ We are going to spend a lot more time on styling, but let's add some simple labe
 
 ```{r}
 ggplot() + 
-  geom_bar(data=top10, aes(x=reorder(Institution, -`2018`), weight=`2018`)) + 
+  geom_bar(data=top10, aes(x=reorder(Institution, -`2019`), weight=`2019`)) + 
   scale_y_continuous(labels=comma) + 
   labs(
     title="Top 10 Football Programs By Attendance", 
@@ -140,7 +140,7 @@ The library has lots and lots of ways to alter the styling -- we can programmati
 
 ```{r}
 ggplot() + 
-  geom_bar(data=top10, aes(x=reorder(Institution, -`2018`), weight=`2018`)) + 
+  geom_bar(data=top10, aes(x=reorder(Institution, -`2019`), weight=`2019`)) + 
   scale_y_continuous(labels=comma) + 
   labs(
     title="Top 10 Football Programs By Attendance", 
@@ -153,7 +153,7 @@ Or the minimal theme:
 
 ```{r}
 ggplot() + 
-  geom_bar(data=top10, aes(x=reorder(Institution, -`2018`), weight=`2018`)) + 
+  geom_bar(data=top10, aes(x=reorder(Institution, -`2019`), weight=`2019`)) + 
   scale_y_continuous(labels=comma) + 
   labs(
     title="Top 10 Football Programs By Attendance", 
@@ -170,7 +170,7 @@ Sometimes, we don't want vertical bars. Maybe we think this would look better ho
 
 ```{r}
 ggplot() + 
-  geom_bar(data=top10, aes(x=reorder(Institution, -`2018`), weight=`2018`)) + 
+  geom_bar(data=top10, aes(x=reorder(Institution, -`2019`), weight=`2019`)) + 
   scale_y_continuous(labels=comma) + 
   labs(
     title="Top 10 Football Programs By Attendance", 

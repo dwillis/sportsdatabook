@@ -9,7 +9,7 @@ library(downloadthis)
 library(glue)
 
 dllink <- download_link(
-  link = "http://mattwaite.github.io/sportsdatafiles/footballlogs20.csv",
+  link = "https://dwillis.github.io/sportsdatafiles/footballlogs20.csv",
   button_label = "Download csv file",
   button_type = "danger",
   has_icon = TRUE,
@@ -33,7 +33,7 @@ And the data.
 football <- read_csv("data/footballlogs20.csv")
 ```
 
-What we have here is every game in college football this season. The question we want to answer is this: Who had the most prolific offenses in the Big Ten? And how did they get there? 
+What we have here is every game in college football for the 2019-2020 season. The question we want to answer is this: Who had the most prolific offenses in the Big Ten? And how did they get there? 
 
 So to make this chart, we have to just add one thing to a bar chart like we did in the previous chapter. However, it's not that simple.
 
@@ -97,6 +97,6 @@ ggplot() +
   coord_flip()
 ```
 
-And just like that ... Penn State comes out on top? Huh. And look who is fourth.
+And just like that ... Penn State comes out on top? Huh. And look who is last.
 
 What else is the problem here? Hint: there was a global pandemic going on.
