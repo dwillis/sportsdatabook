@@ -19,7 +19,7 @@ library(downloadthis)
 library(glue)
 
 dllink <- download_link(
-  link = "http://mattwaite.github.io/sportsdatafiles/logs1520.csv",
+  link = "https://dwillis.github.io/sportsdatafiles/logs1520.csv",
   button_label = "Download csv file",
   button_type = "danger",
   has_icon = TRUE,
@@ -97,7 +97,6 @@ The first thing: R-squared. In this case, the Adjusted R-squared value is -0.000
 
 Second: The P-value. We want anything less than .05. If it's above .05, the difference between them is not statistically significant -- it's probably explained by random chance. In our case, we have 0.7106. Is that more than .05? Yes. Yes it is. So this is random. There's no relationship between the number of threes the opponent makes and the number of wins a team has.
 
-
 Normally, we'd stop here, but let's look at the third element: The coefficient. In this case, the coefficient for TeamOpp3P is -0.001400. What this model predicts, given that and the intercept of 17.199150, is this: Every team starts with about 17 wins. For every 100 three pointers the other team makes, you lose .14 games off that total. So if you give up 100 threes in a season, you'll be a 17 win team. Give up 200, you're closer to a 16 win team, and so on. How am I doing that? Remember your algebra and y = mx + b. In this case, y is the wins, m is the coefficient, x is the number of threes given up and b is the intercept. 
 
 Let's use Nebraska as an example. They had 276 threes scored on them in the 2019-2020 season. 
@@ -158,7 +157,7 @@ shootfit <- lm(Wins ~ AvgShootingPct, data = shooting)
 summary(shootfit)
 ```
 
-The p-value isn't random. The adjusted R-squared is pushing 40 percent. We've got something here. Let's use our coefficents to look at Nebraska's 2019-2020 season (not the COVID season, because all the nunmbers are super weird in that season).
+The p-value isn't random. The adjusted R-squared is pushing 40 percent. We've got something here. Let's use our coefficients to look at Nebraska's 2019-2020 season (not the COVID season, because all the numbers are super weird in that season).
 
 ```{r}
 (153.942 * .405) + -51.155 
