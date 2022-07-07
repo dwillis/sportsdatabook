@@ -13,7 +13,7 @@ library(downloadthis)
 library(glue)
 
 dllink <- download_link(
-  link = "http://mattwaite.github.io/sportsdatafiles/logs21.csv",
+  link = "https://dwillis.github.io/sportsdatafiles/logs21.csv",
   button_label = "Download csv file",
   button_type = "danger",
   has_icon = TRUE,
@@ -37,25 +37,25 @@ And now load the data.
 logs <- read_csv("data/logs21.csv")
 ```
 
-This data has every game from every team in it, so we need to use filtering to limit it, because we just want to look at Nebraska. If you don't remember, flip back to chapter 6. 
+This data has every game from every team in it, so we need to use filtering to limit it, because we just want to look at Maryland. If you don't remember, flip back to chapter 6. 
 
 ```{r}
-nu <- logs %>% filter(Team == "Nebraska")
+umd <- logs %>% filter(Team == "Maryland")
 ```
 
-Because this data has just Nebraska data in it, the dates are formatted correctly, and the data is long data (instead of wide), we have what we need to make line charts.
+Because this data has just Maryland data in it, the dates are formatted correctly, and the data is long data (instead of wide), we have what we need to make line charts.
 
 Line charts, unlike bar charts, do have a y-axis. So in our ggplot step, we have to define what our x and y axes are. In this case, the x axis is our Date -- the most common x axis in line charts is going to be a date of some variety -- and y in this case is up to us. We've seen from previous walkthroughs that how well a team shoots the ball has a lot to do with how well a team does in a season, so let's chart that. 
 
 ```{r}
-ggplot() + geom_line(data=nu, aes(x=Date, y=TeamFGPCT))
+ggplot() + geom_line(data=umd, aes(x=Date, y=TeamFGPCT))
 ```
 
-See some problems here? The first you'll probably see is the long COVID pause the team had to take. The real problem, though is that the Y axis doesn't start with zero. That makes this look more dramatic than it is. To make the axis what you want, you can use `scale_x_continuous` or `scale_y_continuous` and pass in a list with the bottom and top value you want. You do that like this:
+The problem here is that the Y axis doesn't start with zero. That makes this look more dramatic than it is. To make the axis what you want, you can use `scale_x_continuous` or `scale_y_continuous` and pass in a list with the bottom and top value you want. You do that like this:
 
 ```{r}
 ggplot() + 
-  geom_line(data=nu, aes(x=Date, y=TeamFGPCT)) + 
+  geom_line(data=umd, aes(x=Date, y=TeamFGPCT)) + 
   scale_y_continuous(limits = c(0, .6))
 ```
 
@@ -63,7 +63,7 @@ Note also that our X axis labels are automated. It knows it's a date and it just
 
 ## This is too simple. 
 
-With datasets, we want to invite comparison. So let's answer the question visually. Let's put two lines on the same chart. How does Nebraska compare to Michigan State, for example? 
+With datasets, we want to invite comparison. So let's answer the question visually. Let's put two lines on the same chart. How does Maryland compare to Michigan State, for example? 
 
 ```{r}
 msu <- logs %>% filter(Team == "Michigan State")
@@ -74,14 +74,14 @@ In this case, because we have two different datasets, we're going to put everyth
 First, let's chart Nebraska. Read carefully. First we set the data. Then we set our aesthetic. Unlike bars, we need an X and a Y variable. In this case, our X is the date of the game, Y is the thing we want the lines to move with. In this case, the Team Field Goal Percentage -- TeamFGPCT. 
 
 ```{r}
-ggplot() + geom_line(data=nu, aes(x=Date, y=TeamFGPCT), color="red")
+ggplot() + geom_line(data=umd, aes(x=Date, y=TeamFGPCT), color="red")
 ```
 
 Now, by using +, we can add Michigan State to it. REMEMBER COPY AND PASTE IS A THING. Nothing changes except what data you are using.
 
 ```{r}
 ggplot() + 
-  geom_line(data=nu, aes(x=Date, y=TeamFGPCT), color="red") + 
+  geom_line(data=umd, aes(x=Date, y=TeamFGPCT), color="red") + 
   geom_line(data=msu, aes(x=Date, y=TeamFGPCT), color="green")
 ```
 
@@ -89,12 +89,12 @@ Let's flatten our lines out by zeroing the Y axis.
 
 ```{r}
 ggplot() + 
-  geom_line(data=nu, aes(x=Date, y=TeamFGPCT), color="red") + 
+  geom_line(data=umd, aes(x=Date, y=TeamFGPCT), color="red") + 
   geom_line(data=msu, aes(x=Date, y=TeamFGPCT), color="green") + 
   scale_y_continuous(limits = c(0, .65))
 ```
 
-So visually speaking, the difference between Nebraska and Michigan State's season is that Michigan State stayed mostly on an even keel, and Nebraska went on a two month swoon.
+So visually speaking, the difference between Maryland and Michigan State's season is that while both had some significant variations shooting the ball, Maryland's positive outliers were greater and Michigan State's low points were lower.
 
 ## But what if I wanted to add a lot of lines. 
 
@@ -111,12 +111,12 @@ I can keep layering on layers all day if I want. And if my dataset has more than
 ```{r}
 ggplot() + 
   geom_line(data=p5conf, aes(x=Date, y=TeamFGPCT, group=Team), color="grey") + 
-  geom_line(data=nu, aes(x=Date, y=TeamFGPCT), color="red") + 
+  geom_line(data=umd, aes(x=Date, y=TeamFGPCT), color="red") + 
   geom_line(data=msu, aes(x=Date, y=TeamFGPCT), color="green") + 
   scale_y_continuous(limits = c(0, .65))
 ```
 
-What do we see here? How has Nebraska and Michigan State's season evolved against all the rest of the teams in college basketball?
+What do we see here? How has Maryland and Michigan State's season evolved against all the rest of the teams in college basketball?
 
 But how does that compare to the average? We can add that pretty easily by creating a new dataframe with it and add another geom_line.
 
@@ -127,7 +127,7 @@ average <- logs %>% group_by(Date) %>% summarise(mean_shooting=mean(TeamFGPCT))
 ```{r}
 ggplot() + 
   geom_line(data=p5conf, aes(x=Date, y=TeamFGPCT, group=Team), color="grey") + 
-  geom_line(data=nu, aes(x=Date, y=TeamFGPCT), color="red") + 
+  geom_line(data=umd, aes(x=Date, y=TeamFGPCT), color="red") + 
   geom_line(data=msu, aes(x=Date, y=TeamFGPCT), color="green") + 
   geom_line(data=average, aes(x=Date, y=mean_shooting), color="black") + 
   scale_y_continuous(limits = c(0, .65))
